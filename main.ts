@@ -10,23 +10,37 @@ input.onButtonPressed(Button.B, function () {
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     Character.change(LedSpriteProperty.Y, -1)
 })
+let sound1 = 0
+let Room = 0
+let Time_Passed = 0
+let score_for_keys = 0
+let boolean = false
+let Character: game.LedSprite = null
+let Start_Time = input.runningTime()
+Character = game.createSprite(2, 2)
+let Key_1 = game.createSprite(0, 0)
+let Key2 = game.createSprite(0, 0)
+let Key_3 = game.createSprite(0, 0)
 let Pain = 0
 let Keys = 0
 let Key_3_last = 0
 let Egg = 0
-let Room = 0
-let score_for_keys = 0
-let Character: game.LedSprite = null
-Character = game.createSprite(2, 2)
-let Key2 = game.createSprite(0, 0)
-let Key_3 = game.createSprite(0, 0)
-let Key_1 = game.createSprite(0, 0)
 basic.forever(function () {
+    boolean = true
     if (score_for_keys == 3) {
+        Time_Passed = (input.runningTime() - Start_Time) / 1000
+        music.playMelody("C - C - D E F G ", 120)
+        music.playMelody("F - D E D C F G ", 120)
+        basic.clearScreen()
         basic.showString("YOU WIN")
+        basic.clearScreen()
+        basic.showString("" + (Time_Passed))
+        basic.clearScreen()
+        basic.showString("Seconds")
         game.gameOver()
     }
     if (Room == 0) {
+        led.setDisplayMode(DisplayMode.BlackAndWhite)
         led.plot(0, 0)
         led.plot(1, 0)
         led.plot(3, 0)
@@ -41,10 +55,21 @@ basic.forever(function () {
         led.plot(4, 3)
         led.plot(4, 2)
         led.plot(4, 1)
+        Key_1.set(LedSpriteProperty.X, 0)
+        Key_1.set(LedSpriteProperty.Y, 0)
+        Key2.set(LedSpriteProperty.X, 0)
+        Key2.set(LedSpriteProperty.Y, 0)
+        Key_3.set(LedSpriteProperty.X, 0)
+        Key_3.set(LedSpriteProperty.Y, 0)
         if (Egg == 1) {
             basic.clearScreen()
             basic.pause(500)
+            Time_Passed = (input.runningTime() - Start_Time) / 1000
             basic.showString("TRUE WINNER")
+            basic.clearScreen()
+            basic.showString("" + (Time_Passed))
+            basic.clearScreen()
+            basic.showString("Seconds")
             game.setScore(100)
             game.gameOver()
         }
@@ -88,6 +113,7 @@ basic.forever(function () {
         }
     }
     if (Room == 1) {
+        led.setDisplayMode(DisplayMode.BlackAndWhite)
         led.plot(1, 0)
         led.plot(1, 1)
         led.plot(1, 2)
@@ -120,6 +146,7 @@ basic.forever(function () {
         }
     }
     if (Room == 2) {
+        led.setDisplayMode(DisplayMode.BlackAndWhite)
         led.plot(1, 0)
         led.plot(1, 1)
         led.plot(0, 1)
@@ -132,6 +159,11 @@ basic.forever(function () {
         led.plot(3, 3)
         led.plot(3, 4)
         led.plot(4, 3)
+        if (sound1 == 1) {
+            music.playMelody("C5 C5 A B C5 A G E ", 120)
+            music.playMelody("C C E D C E F A ", 120)
+            sound1 = 0
+        }
         Key_1.set(LedSpriteProperty.X, 1)
         Key_1.set(LedSpriteProperty.Y, 0)
         Key2.set(LedSpriteProperty.X, 1)
@@ -143,6 +175,7 @@ basic.forever(function () {
                 basic.pause(100)
                 game.addScore(1)
                 score_for_keys += 1
+                sound1 = 1
             }
         }
         if (Key_3_last == 0) {
@@ -208,6 +241,7 @@ basic.forever(function () {
         }
     }
     if (Room == 3) {
+        led.setDisplayMode(DisplayMode.BlackAndWhite)
         led.plot(0, 1)
         led.plot(1, 1)
         led.plot(2, 1)
@@ -256,6 +290,7 @@ basic.forever(function () {
         }
     }
     if (Room == 66) {
+        led.setDisplayMode(DisplayMode.BlackAndWhite)
         led.plot(0, 0)
         led.plot(0, 1)
         led.plot(0, 2)
@@ -277,7 +312,7 @@ basic.forever(function () {
                 Key_1.set(LedSpriteProperty.X, 0)
                 Key_1.set(LedSpriteProperty.Y, 0)
                 basic.pause(100)
-                score_for_keys = 1
+                score_for_keys += 1
                 game.addScore(1)
             }
         }
